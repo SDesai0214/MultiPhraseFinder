@@ -6,5 +6,9 @@
     "action" : {
         "default_popup" : "/src/popup.html",
         "default_icon" : "/multiphrasefinder.png"
-    }
+    },
+    "background" : {
+        "service_worker" : "/src/background.js"
+    },
+    "permissions" : [ "activeTab"]
 }
