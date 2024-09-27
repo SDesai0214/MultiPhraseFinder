@@ -5,3 +5,5 @@ a small website, or a large computer architecture textbook) talk about what I am
 spending 30 minutes just scrolling through the Cmd F findings.
 
 I hope this also finds some use for you as well.
+
+-Shubhankar
