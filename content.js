@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const random_color_pick = document.getElementById('randomcolor');
 
+  
+
     document.getElementById('inputForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -19,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
 
         if (inputValue ) {
-            const dup = false;
+            dup = false;
 
             for (const pair of phrases) {
                 if (pair.key == inputValue) {
@@ -29,13 +31,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (!dup) {
 
-                let color;
+                let color = "#39ff14";
 
-                if (random_color_pick.checked) {
-                    color = tinycolor.random().lighten(30).toHexString();
+
+                if (random_color_pick.checked == false) {
+                    color = color_pick.value;
                 } else {
-                    color = tinycolor(color_pick).lighten(30).toHexString();
+                    color = tinycolor.random().lighten(30).toHexString();
                 }
+
+                // if (random_color_pick.checked) {
+                //     color = tinycolor.random().lighten(30).toHexString();
+                // } else {
+                //     color = tinycolor(color_pick).lighten(30).toHexString();
+                // }
                 phrases.push({key : inputValue, val : color});
 
             }
