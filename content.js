@@ -2,9 +2,9 @@
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    const phrases = [];
+    const phrases = JSON.parse(localStorage.getItem('phrases')) || [];;
 
-    const listcontain = document.getElementById('phrase_vector');
+    const listcontain = document.getElementById('phrases');
 
     const color_pick = document.getElementById('inputcolor');
 
@@ -47,6 +47,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // }
                 phrases.push({key : inputValue, val : color});
 
+                localStorage.setItem('phrases', JSON.stringify(phrases)); // Save to localStorage
+
             }
 
             
@@ -79,4 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
             listcontain.appendChild(div);
         });
     }
+
+    DisplayPhrases();
 });
