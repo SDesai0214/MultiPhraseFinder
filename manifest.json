@@ -2,13 +2,27 @@
     "manifest_version" : 3,
     "name" : "MultiPhrase Finder",
     "description" : "Map n amount of key phrases to see their intersections. Your ticket to getting what you want from a page without spending time scrolling.",
-    "version" : "1.0", 
+    "version" : "1.1", 
     "action" : {
-        "default_popup" : "/src/popup.html",
-        "default_icon" : "/multiphrasefinder.png"
+        "default_popup" : "popup.html",
+        "default_icon" : "multiphrasefinder.png"
     },
-    "background" : {
-        "service_worker" : "/src/background.js"
+
+    "permissions" : [ "activeTab", "scripting", "storage"],
+    "commands" : {
+        "_execute_action" : {
+            "suggested_key" : {
+                "default" : "Ctrl+D",
+                "mac" : "Command+D"
+            }
+        }
     },
-    "permissions" : [ "activeTab"]
+
+    "content_scripts" : [
+        {
+            "matches" : ["<all_urls>"],
+            "js" : ["content.js"]
+
+        }
+    ]
 }
