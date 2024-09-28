@@ -10,9 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const random_color_pick = document.getElementById('randomcolor');
 
+   
   
 
     document.getElementById('inputForm').addEventListener('submit', function(event) {
+
         event.preventDefault();
 
         const inputValue = document.getElementById('userinput').value;
@@ -21,6 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
 
         if (inputValue ) {
+
+            
             dup = false;
 
             for (const pair of phrases) {
@@ -58,6 +62,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.getElementById('userinput').value = '';
     });
+
+    document.getElementById('resetphrases').addEventListener('click', function() {
+        localStorage.removeItem('phrases'); // Clear localStorage
+        phrases.length = 0; // Clear the array
+        DisplayPhrases(); // Update the display
+    });
+
 
 
     function DisplayPhrases() {
