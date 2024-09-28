@@ -53,11 +53,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 localStorage.setItem('phrases', JSON.stringify(phrases)); // Save to localStorage
 
+                DisplayPhrases();
+                //console.log(phrases);
+                highlightPhrases(phrases);
+
             }
 
             
-            console.log(phrases);
-            DisplayPhrases();
+            // console.log(phrases);
+            // DisplayPhrases();
         }
 
         document.getElementById('userinput').value = '';
@@ -67,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.removeItem('phrases'); // Clear localStorage
         phrases.length = 0; // Clear the array
         DisplayPhrases(); // Update the display
+        highlightPhrases(phrases);
     });
 
 
@@ -93,5 +98,80 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+
+
+    // function highlightPhrases() {
+    //     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    
+    //     let node;
+    //     while (node = walker.nextNode()) {
+    //         phrases.forEach(phrase => {
+    //             const regex = new RegExp(`(${phrase.key})`, 'gi');
+    //             if (regex.test(node.nodeValue)) {
+    //                 const span = document.createElement('span');
+    //                 span.style.backgroundColor = phrase.val;
+    //                 span.className = 'highlighted';
+    //                 span.textContent = node.nodeValue.replace(regex, '$1');
+                    
+    //                 const range = document.createRange();
+    //                 range.selectNodeContents(node);
+    //                 range.deleteContents();
+    //                 range.insertNode(span);
+    //             }
+    //         });
+    //     }
+    // }
+
+    // function highlightPhrases() {
+    //     // Clear existing highlights
+    //     document.querySelectorAll('.highlighted').forEach(el => {
+    //         el.outerHTML = el.innerHTML; // Remove highlighting
+    //     });
+
+    //     // Highlight new phrases
+    //     phrases.forEach(phrase => {
+    //         const regex = new RegExp(`(${phrase.key})`, 'gi');
+    //         document.body.innerHTML = document.body.innerHTML.replace(regex, match => 
+    //             `<span class="highlighted" style="background-color: ${phrase.val}">${match}</span>`
+    //         );
+    //     });
+    // }
+
+
+    function highlightPhrases(phrases) {
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    
+        let node;
+        while (node = walker.nextNode()) {
+            phrases.forEach(phrase => {
+                const regex = new RegExp(`(${phrase.key})`, 'gi');
+                if (regex.test(node.nodeValue)) {
+                    const span = document.createElement('span');
+                    span.style.backgroundColor = phrase.val;
+                    span.className = 'highlighted';
+                    
+                    // Split text node and insert highlighted spans
+                    const parts = node.nodeValue.split(regex);
+                    const fragment = document.createDocumentFragment();
+    
+                    parts.forEach(part => {
+                        if (regex.test(part)) {
+                            const highlightSpan = span.cloneNode();
+                            highlightSpan.textContent = part;
+                            fragment.appendChild(highlightSpan);
+                        } else {
+                            fragment.appendChild(document.createTextNode(part));
+                        }
+                    });
+                    if (node.parentNode) {
+                        node.parentNode.replaceChild(fragment, node);
+                    }
+                    
+                }
+            });
+        }
+    }
+
     DisplayPhrases();
+    highlightPhrases(phrases);
 });
